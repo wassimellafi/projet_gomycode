@@ -27,9 +27,9 @@ const Navbar = () => {
                                         LOGOUT{" "}
                                     </ul>
                                 </Link>
-                                <Link to="/courses">
+                                <Link to="/start">
                                     {" "}
-                                    <ul>COURSES </ul>
+                                    <ul>START-QUIZ </ul>
                                 </Link>
                             </>
                         ) : (

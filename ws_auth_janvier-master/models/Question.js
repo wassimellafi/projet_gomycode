@@ -1,31 +1,18 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 const questionSchema = new Schema({
-    description: String,
-    image: {
-        type: String,
-        required: false,
-    },
-    alternatives: [
-        {
-            text: {
-                type: String,
-                required: true,
-            },
-            isCorrect: {
-                type: Boolean,
-                required: true,
-                default: false,
-            },
-            image: {
-                type: String,
-                required: false,
-            },
-        },
-    ],
+    question: String,
+    type: String,
+    difficulty: String,
+    correct_answer: String,
+    incorrect_answers: [String],
     author: {
         type: Schema.Types.ObjectId,
         ref: "User",
+    },
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: "Quiz",
     },
 });
 

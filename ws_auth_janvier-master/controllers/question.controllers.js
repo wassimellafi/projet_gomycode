@@ -38,6 +38,27 @@ exports.Update = async (req, res) => {
         return res.status(500).json({ error: error });
     }
 };
+exports.getByCat = async (req, res) => {
+    try {
+        const findcategory = await Question.find({
+            category: req.params["category"],
+            difficulty: req.params["difficulty"],
+        });
+        // ken mech mawjoud
+        // bad credential
+        if (!findcategory) {
+            return res
+                .status(403)
+                .send({ errors: [{ msg: "category not found" }] });
+        }
+
+        res.status(200).send({
+            findcategory,
+        });
+    } catch (error) {
+        res.status(500).send({ errors: [{ msg: "erreur" }] });
+    }
+};
 exports.getById = async (req, res) => {
     try {
         const findquestion = await Question.findById(req.params["id"]);
