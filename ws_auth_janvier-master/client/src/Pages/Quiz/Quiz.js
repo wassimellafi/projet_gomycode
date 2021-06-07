@@ -12,13 +12,13 @@ const Quiz = ({ questions, score, setScore, setQuestions }) => {
         setOptions(
             questions &&
                 handleShuffle([
-                    questions[currQues]?.correct_answer,
-                    ...questions[currQues]?.incorrect_answers,
+                    questions.findcategory[currQues]?.correct_answer,
+                    ...questions.findcategory[currQues]?.incorrect_answers,
                 ])
         );
     }, [currQues, questions]);
 
-    console.log(questions);
+    console.log("questionspagequiz", questions);
 
     const handleShuffle = (options) => {
         return options.sort(() => Math.random() - 0.5);
@@ -31,7 +31,8 @@ const Quiz = ({ questions, score, setScore, setQuestions }) => {
             {questions ? (
                 <>
                     <div className="quizInfo">
-                        <span>{questions[currQues].category}</span>
+                        <span></span>
+                        {/* {questions.findcategory[currQues].category} */}
                         <span>
                             {/* {questions[currQues].difficulty} */}
                             Score : {score}
@@ -42,7 +43,9 @@ const Quiz = ({ questions, score, setScore, setQuestions }) => {
                         setCurrQues={setCurrQues}
                         questions={questions}
                         options={options}
-                        correct={questions[currQues]?.correct_answer}
+                        correct={
+                            questions.findcategory[currQues]?.correct_answer
+                        }
                         score={score}
                         setScore={setScore}
                         setQuestions={setQuestions}

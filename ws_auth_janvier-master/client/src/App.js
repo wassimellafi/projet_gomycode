@@ -11,7 +11,8 @@ import PrivateRoute from "./router/PrivateRoute";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { current } from "./Redux/actions/user";
-import { question } from "./Redux/actions/question";
+import { allquestion } from "./Redux/actions/question";
+import { category } from "./Redux/actions/question";
 import DescriptionCourses from "./Pages/DescriptionCourses/DescriptionCourses";
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
@@ -19,11 +20,15 @@ import Home from "./Pages/Home/Home";
 import Quiz from "./Pages/Quiz/Quiz";
 import Result from "./Pages/Result/Result";
 import axios from "axios";
+import { useSelector } from "react-redux";
 function App() {
     const [questions, setQuestions] = useState();
+    const [allquestions, setAllquestions] = useState();
     const [name, setName] = useState();
     const [score, setScore] = useState(0);
-
+    const [data, setData] = useState({});
+    const question = useSelector((state) => state.questionReducer.question);
+    console.log("coursesapp", question);
     const fetchQuestions = async (category = "", difficulty = "") => {
         //  const { data } = await axios.get(
         //         `/api/questions/filter/${category}/${difficulty}`
@@ -32,7 +37,13 @@ function App() {
             `/api/questions/filter/60b23530a9030f26047add6f/easy`
         );
         setQuestions(data);
+        console.log("questionsApp", questions);
     };
+    const allquestion = () => async (dispatch) => {
+        let result = await axios.get("/api/questions");
+        setAllquestions(result.data.findquestion);
+    };
+    console.log("all", allquestions);
     const [courses, setCourses] = useState([
         {
             id: 1,
@@ -131,18 +142,28 @@ function App() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(current());
-        dispatch(question());
+        dispatch(allquestion());
+        dispatch(category());
     }, []);
     return (
         <div>
             <Navbar />
             <Switch>
-                <Route exact path="/" component={Landpage} />
+                <Route exact path="/">
+                    <Landpage
+                        questions={questions}
+                        allquestions={allquestions}
+                    />
+                </Route>
                 <Route path="/register" component={Register} />
                 <Route
                     path="/courses"
                     render={(props) => (
-                        <CoursesList {...props} courses={courses} />
+                        <CoursesList
+                            {...props}
+                            allquestions={allquestions}
+                            courses={courses}
+                        />
                     )}
                 />
                 <Route path="/login" component={Login} />
@@ -150,14 +171,21 @@ function App() {
                 <Route
                     path="/course/:id"
                     render={(props) => (
-                        <DescriptionCourses {...props} courses={courses} />
+                        <DescriptionCourses
+                            {...props}
+                            allquestions={allquestions}
+                            courses={courses}
+                        />
                     )}
                 />
                 <Route path="/start" exact>
                     <Home
+                        questions={questions}
                         name={name}
                         setName={setName}
                         fetchQuestions={fetchQuestions}
+                        setQuestions={setQuestions}
+                        allquestions={allquestions}
                     />
                 </Route>
                 <Route path="/quiz">
@@ -169,6 +197,7 @@ function App() {
                         setQuestions={setQuestions}
                     />
                 </Route>
+
                 <Route path="/result">
                     <Result name={name} score={score} />
                 </Route>

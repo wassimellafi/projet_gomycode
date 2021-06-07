@@ -18,21 +18,29 @@ exports.Create = async (req, res) => {
 exports.Update = async (req, res) => {
     try {
         const _id = req.params.id;
-        const { description, image, alternatives, author } = req.body;
+        const {
+            question,
+            type,
+            difficulty,
+            correct_answer,
+            incorrect_answers,
+        } = req.body;
 
-        let question = await Question.findOne({ _id });
+        let findquestion = await Question.findOne({ _id });
 
-        if (!question) {
+        if (!findquestion) {
             const newQuestion = new Question({ ...req.body });
             await newQuestion.save();
-            return res.status(201).json(question);
+            return res.status(201).json(findquestion);
         } else {
-            question.description = description;
-            question.alternatives = alternatives;
-            question.image = image;
-            question.author = author;
-            await question.save();
-            return res.status(200).json(question);
+            findquestion.question = question;
+            findquestion.type = type;
+            findquestion.difficulty = difficulty;
+            findquestion.correct_answer = correct_answer;
+            findquestion.incorrect_answers = incorrect_answers;
+
+            await findquestion.save();
+            return res.status(200).json(findquestion);
         }
     } catch (error) {
         return res.status(500).json({ error: error });

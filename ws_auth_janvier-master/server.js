@@ -12,6 +12,7 @@ connectDB();
 // user
 app.use(express.json());
 app.use("/api/user", require("./router/user"));
+
 app.use("/api/role", require("./router/role"));
 app.use("/api/quiz", require("./router/quiz"));
 app.use("/api/questions", require("./router/question"));

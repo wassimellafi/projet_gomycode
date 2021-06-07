@@ -3,13 +3,12 @@
 .landpage {
     font-family: "Lato", sans-serif;
     margin: 0 !important;
-    background-image: url("https://images.pexels.com/photos/1008000/pexels-photo-1008000.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
     /* -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover; */
     background-repeat: no-repeat;
     background-size: cover;
-
+    background-color: gray;
     color: #0a0a0b;
     /* overflow: hidden; */
     /* width: 100% !important; */

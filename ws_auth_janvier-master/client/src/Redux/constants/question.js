@@ -5,3 +5,5 @@ export const FAIL_QUESTION = "FAIL_USER";
 export const QUESTION_USER = "QUESTION_USER";
 
 export const LOGIN_USER = "LOGIN_USER";
+
+export const CATEGORY_QUESTION = "CATEGORY_QUESTION";

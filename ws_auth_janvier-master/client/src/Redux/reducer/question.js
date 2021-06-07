@@ -5,28 +5,33 @@ const {
     FAIL_QUESTION,
     QUESTION_USER,
     LOGIN_USER,
+    CATEGORY_QUESTION,
 } = require("../constants/question");
 
 // initialstate
 const initialState = {
     question: {},
+    category: {},
     errors: [],
     isAuth: false,
+    load: false,
 };
 
 // pure function=> (state, {type,payload})=>
 const questionReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case REGISTER_QUESTION:
-            localStorage.setItem("token", payload.token);
-            return { ...state, question: payload.question };
-        case LOGIN_USER:
-            localStorage.setItem("token", payload.token);
-            return { ...state, user: payload.user, load: false, isAuth: true };
-        case FAIL_QUESTION:
-            return { ...state, errors: payload };
         case QUESTION_USER:
-            return { ...state, question: payload.question, isAuth: true };
+            return {
+                ...state,
+                question: payload.findquestion,
+                isAuth: true,
+            };
+        case CATEGORY_QUESTION:
+            return {
+                ...state,
+                category: payload.category,
+                isAuth: true,
+            };
         case "VIDE_ERRORS":
             return { ...state, errors: [] };
         default:

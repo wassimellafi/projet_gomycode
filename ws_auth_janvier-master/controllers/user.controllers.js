@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 exports.Register = async (req, res) => {
     try {
         // req.body= name , email , password , phone
-        const { email, password } = req.body;
+        const { email, password, pic } = req.body;
         // test email
         const findUser = await User.findOne({ email });
         // email should be unique

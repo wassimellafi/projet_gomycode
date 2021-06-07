@@ -1,16 +1,22 @@
 import { Button, MenuItem, TextField } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 import Categories from "../../Data/Categories";
 import "./Home.css";
-
-const Home = ({ name, fetchQuestions }) => {
+import { useSelector, useDispatch } from "react-redux";
+import { allquestion } from "../../Redux/actions/question";
+const Home = ({ fetchQuestions, questions, setQuestions }) => {
     const [category, setCategory] = useState("");
     const [difficulty, setDifficulty] = useState("");
     const [error, setError] = useState(false);
-
     const history = useHistory();
+    const result = useSelector((state) => state.questionReducer.question);
+    console.log(result);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(allquestion());
+    }, []);
 
     const handleSubmit = () => {
         if (!category || !difficulty) {
@@ -22,7 +28,6 @@ const Home = ({ name, fetchQuestions }) => {
             history.push("/quiz");
         }
     };
-
     return (
         <div className="content">
             <div className="settings">
@@ -31,7 +36,6 @@ const Home = ({ name, fetchQuestions }) => {
                     {error && (
                         <ErrorMessage>Please Fill all the feilds</ErrorMessage>
                     )}
-
                     <TextField
                         select
                         label="Select Category"

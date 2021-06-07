@@ -11,7 +11,6 @@ const Navbar = () => {
         <header>
             <h2>
                 <i className="icon-plane" />
-                <Link to="/">Authentification</Link>
             </h2>
             <nav>
                 <ul>

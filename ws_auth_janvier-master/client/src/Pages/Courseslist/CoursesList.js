@@ -4,21 +4,20 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
-const CoursesList = (props) => {
-    const questions = useSelector((state) => state.questionReducer.question);
-    console.log(questions);
-
+import { Button, MenuItem, TextField } from "@material-ui/core";
+const CoursesList = ({ allquestions }) => {
+    const question = useSelector((state) => state.questionReducer.question);
+    console.log("questionscourses", question);
     return (
         <Container>
-            <Row>
-                {props.courses.map((question, key) => {
-                    return (
-                        <Col key={question.id}>
-                            <Courses question={question} />
-                        </Col>
-                    );
-                })}
-            </Row>
+            <b>{question && question.description}</b>
+            {/* <Row>
+                {question.map((cat) => (
+                    <MenuItem key={cat._id} value={cat._id}>
+                        {cat.description}
+                    </MenuItem>
+                ))}
+            </Row> */}
         </Container>
     );
 };

@@ -6,8 +6,15 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     phone: Number,
     role: {
-        type: Schema.Types.ObjectId,
-        ref: "Role",
+        type: String,
+        required: true,
+        default: "etudiant",
+    },
+    pic: {
+        type: String,
+        required: true,
+        default:
+            "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
 });
 

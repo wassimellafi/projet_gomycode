@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register, videErrors } from "../../Redux/actions/user";
 import Errors from "../../Components/Errors/Error";
+import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
+import { Form } from "react-bootstrap";
 import "./Register.css";
 
 const Register = ({ history }) => {
     const [user, setUser] = useState({});
     const errors = useSelector((state) => state.userReducer.errors);
+    const [pic, setPic] = useState(
+        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+    );
+    const [picMessage, setPicMessage] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -23,8 +29,49 @@ const Register = ({ history }) => {
             dispatch(videErrors());
         };
     }, []);
+    const postDetails = (pics) => {
+        if (
+            pics ===
+            "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+        ) {
+            return setPicMessage("Please Select an Image");
+        }
+        setPicMessage(null);
+        if (pics.type === "image/jpeg" || pics.type === "image/png") {
+            const data = new FormData();
+            data.append("file", pics);
+            data.append("upload_preset", "notezipper");
+            data.append("cloud_name", "piyushproj");
+            fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+                method: "post",
+                body: data,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    setPic(data.url.toString());
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            return setPicMessage("Please Select an Image");
+        }
+    };
     return (
         <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+            {picMessage && (
+                <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
+            )}
+            <Form.Group controlId="pic">
+                <Form.Label>Profile Picture</Form.Label>
+                <Form.File
+                    onChange={(e) => postDetails(e.target.files[0])}
+                    id="custom-file"
+                    type="image/png"
+                    label="Upload Profile Picture"
+                    custom
+                />
+            </Form.Group>
             <div class="card card0 border-0">
                 <div class="row d-flex">
                     <div class="col-lg-6">
@@ -85,6 +132,7 @@ const Register = ({ history }) => {
                                         onChange={handleChange}
                                     />{" "}
                                 </div>
+
                                 <div class="row px-3">
                                     {" "}
                                     <label class="mb-1">
@@ -116,6 +164,22 @@ const Register = ({ history }) => {
                                         onChange={handleChange}
                                     />{" "}
                                 </div>
+                                <div class="row px-3">
+                                    {" "}
+                                    <label class="mb-1">
+                                        <h6 class="mb-0 text-sm">
+                                            Upload Profile Picture
+                                        </h6>
+                                    </label>{" "}
+                                    {/* <Form.File
+                                        onChange={(e) =>
+                                            postDetails(e.target.files[0])
+                                        }
+                                        id="custom-file"
+                                        type="image/png"
+                                        custom
+                                    /> */}
+                                </div>
                                 <div class="row px-3 mb-4">
                                     <div class="custom-control custom-checkbox custom-control-inline">
                                         {" "}
@@ -135,6 +199,7 @@ const Register = ({ history }) => {
                         </div>
                     </div>
                 </div>
+
                 <div class="bg-blue py-4">
                     <div class="row px-3">
                         {" "}
