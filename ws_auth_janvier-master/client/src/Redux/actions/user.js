@@ -30,9 +30,9 @@ export const login = (user, history) => async (dispatch) => {
         let result = await axios.post("/api/user/login", user);
         dispatch({ type: LOGIN_USER, payload: result.data }); //{msg,token,user}
         if (result.data.user.role === "etudiant") {
-            history.push("./courses");
+            history.push("./profile");
         } else if (result.data.user.role === "formateur") {
-            history.push("./result");
+            history.push("./courses");
         } else {
             history.push("./");
         }

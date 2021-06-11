@@ -1,9 +1,14 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { login, current } from "../../Redux/actions/user";
 import "./Profile.css";
 const Profile = () => {
     const user = useSelector((state) => state.userReducer.user);
-
+    console.log("user", user);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(current());
+    }, []);
     return (
         <div class="z-depth-5 main">
             <div class="row">

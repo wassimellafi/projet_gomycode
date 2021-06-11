@@ -23,7 +23,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 function App() {
     const [questions, setQuestions] = useState();
-    const [allquestions, setAllquestions] = useState();
     const [name, setName] = useState();
     const [score, setScore] = useState(0);
     const [data, setData] = useState({});
@@ -39,11 +38,7 @@ function App() {
         setQuestions(data);
         console.log("questionsApp", questions);
     };
-    const allquestion = () => async (dispatch) => {
-        let result = await axios.get("/api/questions");
-        setAllquestions(result.data.findquestion);
-    };
-    console.log("all", allquestions);
+
     const [courses, setCourses] = useState([
         {
             id: 1,
@@ -139,44 +134,21 @@ function App() {
             trailerfilm: "https://www.youtube.com/watch?v=r5X-hFf6Bwo",
         },
     ]);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(current());
-        dispatch(allquestion());
-        dispatch(category());
-    }, []);
+
     return (
         <div>
             <Navbar />
             <Switch>
                 <Route exact path="/">
-                    <Landpage
-                        questions={questions}
-                        allquestions={allquestions}
-                    />
+                    <Landpage questions={questions} />
                 </Route>
                 <Route path="/register" component={Register} />
-                <Route
-                    path="/courses"
-                    render={(props) => (
-                        <CoursesList
-                            {...props}
-                            allquestions={allquestions}
-                            courses={courses}
-                        />
-                    )}
-                />
+                <Route path="/courses" component={CoursesList} />
                 <Route path="/login" component={Login} />
                 <PrivateRoute path="/profile" component={Profile} />
                 <Route
                     path="/course/:id"
-                    render={(props) => (
-                        <DescriptionCourses
-                            {...props}
-                            allquestions={allquestions}
-                            courses={courses}
-                        />
-                    )}
+                    render={(props) => <DescriptionCourses {...props} />}
                 />
                 <Route path="/start" exact>
                     <Home
@@ -185,7 +157,6 @@ function App() {
                         setName={setName}
                         fetchQuestions={fetchQuestions}
                         setQuestions={setQuestions}
-                        allquestions={allquestions}
                     />
                 </Route>
                 <Route path="/quiz">

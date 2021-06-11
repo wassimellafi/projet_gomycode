@@ -40,14 +40,15 @@ const Register = ({ history }) => {
         if (pics.type === "image/jpeg" || pics.type === "image/png") {
             const data = new FormData();
             data.append("file", pics);
-            data.append("upload_preset", "notezipper");
-            data.append("cloud_name", "piyushproj");
-            fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+            data.append("upload_preset", "gomycodeprojet");
+            data.append("cloud_name", "du3yo4e0v");
+            fetch("https://api.cloudinary.com/v1_1/du3yo4e0v/image/upload", {
                 method: "post",
                 body: data,
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    console.log(data);
                     setPic(data.url.toString());
                 })
                 .catch((err) => {
@@ -57,21 +58,12 @@ const Register = ({ history }) => {
             return setPicMessage("Please Select an Image");
         }
     };
+    console.log(pic);
     return (
         <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
             {picMessage && (
                 <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
             )}
-            <Form.Group controlId="pic">
-                <Form.Label>Profile Picture</Form.Label>
-                <Form.File
-                    onChange={(e) => postDetails(e.target.files[0])}
-                    id="custom-file"
-                    type="image/png"
-                    label="Upload Profile Picture"
-                    custom
-                />
-            </Form.Group>
             <div class="card card0 border-0">
                 <div class="row d-flex">
                     <div class="col-lg-6">
@@ -110,7 +102,6 @@ const Register = ({ history }) => {
                                         name="name"
                                         placeholder="Name User "
                                         required
-                                        autofocus
                                         onChange={handleChange}
                                     />{" "}
                                 </div>
@@ -128,7 +119,6 @@ const Register = ({ history }) => {
                                         name="email"
                                         placeholder="email address"
                                         required
-                                        autofocus
                                         onChange={handleChange}
                                     />{" "}
                                 </div>
@@ -160,7 +150,6 @@ const Register = ({ history }) => {
                                         name="phone"
                                         placeholder="enter your phone number "
                                         required
-                                        autofocus
                                         onChange={handleChange}
                                     />{" "}
                                 </div>
@@ -171,14 +160,14 @@ const Register = ({ history }) => {
                                             Upload Profile Picture
                                         </h6>
                                     </label>{" "}
-                                    {/* <Form.File
+                                    <Form.File
                                         onChange={(e) =>
                                             postDetails(e.target.files[0])
                                         }
                                         id="custom-file"
                                         type="image/png"
                                         custom
-                                    /> */}
+                                    />
                                 </div>
                                 <div class="row px-3 mb-4">
                                     <div class="custom-control custom-checkbox custom-control-inline">

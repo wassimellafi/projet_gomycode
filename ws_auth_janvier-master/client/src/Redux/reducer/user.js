@@ -20,7 +20,6 @@ const initialState = {
     load: false,
 };
 
-// pure function=> (state, {type,payload})=>
 const userReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case LOAD_USER:

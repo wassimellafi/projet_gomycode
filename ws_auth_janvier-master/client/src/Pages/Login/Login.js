@@ -64,7 +64,6 @@ const Login = ({ history }) => {
                                         name="email"
                                         placeholder="Enter a valid email address"
                                         required
-                                        autofocus
                                         onChange={handleChange}
                                     />{" "}
                                 </div>

@@ -2,10 +2,11 @@ const Question = require("../models/Question");
 // create one quiz question
 exports.Create = async (req, res) => {
     try {
-        const { description } = req.body;
-        const { image } = req.body;
-        const { alternatives } = req.body;
-        const { author } = req.body;
+        const { question } = req.body;
+        const { type } = req.body;
+        const { difficulty } = req.body;
+        const { correct_answer } = req.body;
+        const { incorrect_answers } = req.body;
         const newQuestion = new Question({ ...req.body });
         await newQuestion.save();
         res.status(200).send({ msg: "register succ", question: newQuestion });

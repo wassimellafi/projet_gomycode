@@ -1,0 +1,8 @@
+.settings__select {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 80%;
+    flex: 0.8;
+    justify-content: space-evenly;
+}
