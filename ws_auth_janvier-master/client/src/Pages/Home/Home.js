@@ -1,4 +1,6 @@
-import { Button, MenuItem, TextField } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
@@ -11,8 +13,8 @@ const Home = ({ fetchQuestions, questions, setQuestions }) => {
     const [difficulty, setDifficulty] = useState("");
     const [error, setError] = useState(false);
     const history = useHistory();
-    const result = useSelector((state) => state.questionReducer.question);
-    console.log(result);
+    const result = useSelector((state) => state.questionReducer.category);
+    console.log("result", result);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(allquestion());
@@ -44,11 +46,11 @@ const Home = ({ fetchQuestions, questions, setQuestions }) => {
                         variant="outlined"
                         style={{ marginBottom: 30 }}
                     >
-                        {Categories.map((cat) => (
-                            <MenuItem key={cat.category} value={cat.value}>
-                                {cat.category}
+                        {/* {result.map((cat) => (
+                            <MenuItem key={cat._id} value={cat._id}>
+                                {cat.title}
                             </MenuItem>
-                        ))}
+                        ))} */}
                     </TextField>
                     <TextField
                         select
@@ -62,10 +64,7 @@ const Home = ({ fetchQuestions, questions, setQuestions }) => {
                             Easy
                         </MenuItem>
                         <MenuItem key="Medium" value="medium">
-                            Medium
-                        </MenuItem>
-                        <MenuItem key="Hard" value="hard">
-                            Hard
+                            facile
                         </MenuItem>
                     </TextField>
                     <Button

@@ -32,7 +32,7 @@ export const login = (user, history) => async (dispatch) => {
         if (result.data.user.role === "etudiant") {
             history.push("./profile");
         } else if (result.data.user.role === "formateur") {
-            history.push("./courses");
+            history.push("./dashbord");
         } else {
             history.push("./");
         }

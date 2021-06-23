@@ -1,5 +1,10 @@
 const express = require("express");
-const { getById, getAll, Create } = require("../controllers/quiz.controllers");
+const {
+    getById,
+    getAll,
+    Create,
+    Delete,
+} = require("../controllers/quiz.controllers");
 const isAuth = require("../middleware/isAuth");
 const router = express.Router();
 
@@ -19,6 +24,7 @@ public
 */
 router.get("/", getAll);
 router.get("/:id", getById);
+router.delete("/delete/:id", Delete);
 
 // default export
 module.exports = router;

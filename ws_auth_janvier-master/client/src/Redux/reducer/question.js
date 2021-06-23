@@ -8,6 +8,7 @@ const {
     CATEGORY_QUESTION,
     CURRENT_USER,
     LOAD_USER,
+    UPDATE_QUESTION,
 } = require("../constants/question");
 
 // initialstate
@@ -29,11 +30,29 @@ const questionReducer = (state = initialState, { type, payload }) => {
                 question: payload.findquestion,
                 isAuth: true,
             };
+        case UPDATE_QUESTION:
+            return state.question.map((question) => {
+                if (question._id === payload.findquestion._id) {
+                    return {
+                        ...question,
+                        ...payload.findquestion,
+                    };
+                } else {
+                    return question;
+                }
+            });
+        case REGISTER_QUESTION:
+            localStorage.setItem("token", payload.token);
+            return {
+                ...state,
+                question: payload,
+                load: false,
+                isAuth: true,
+            };
         case CATEGORY_QUESTION:
             return {
                 ...state,
                 category: payload.findquiz,
-                isAuth: true,
             };
         case LOAD_USER:
             return { ...state, load: true };

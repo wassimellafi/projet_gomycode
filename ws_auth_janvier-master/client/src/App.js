@@ -3,6 +3,8 @@ import Errors from "./Pages/Errors/Errors";
 import Landpage from "./Pages/Landpage/Landpage";
 import Login from "./Pages/Login/Login";
 import CoursesList from "./Pages/Courseslist/CoursesList";
+import Categories from "./Pages/dashboard/categories/Categories";
+import Listcategories from "./Pages/dashboard/listecategories/Listcategories";
 import Profile from "./Pages/Profile/Profile";
 import Register from "./Pages/Register/Register";
 import { Route, Switch } from "react-router-dom";
@@ -29,15 +31,16 @@ function App() {
     const question = useSelector((state) => state.questionReducer.question);
     console.log("coursesapp", question);
     const fetchQuestions = async (category = "", difficulty = "") => {
-        //  const { data } = await axios.get(
-        //         `/api/questions/filter/${category}/${difficulty}`
-        //     );
         const { data } = await axios.get(
-            `/api/questions/filter/60b23530a9030f26047add6f/easy`
+            `/api/questions/filter/${category}/${difficulty}`
         );
+        // const { data } = await axios.get(
+        //     `/api/questions/filter/60b23530a9030f26047add6f/easy`
+        // );
         setQuestions(data);
         console.log("questionsApp", questions);
     };
+    console.log("dataApp", data);
 
     const [courses, setCourses] = useState([
         {
@@ -144,6 +147,8 @@ function App() {
                 </Route>
                 <Route path="/register" component={Register} />
                 <Route path="/courses" component={CoursesList} />
+                <Route path="/dashbord" component={Listcategories} />
+
                 <Route path="/login" component={Login} />
                 <PrivateRoute path="/profile" component={Profile} />
                 <Route
