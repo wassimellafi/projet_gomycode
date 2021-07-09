@@ -8,6 +8,7 @@ import {
     LOAD_USER,
     UPDATE_QUESTION,
     REGISTER_QUESTION,
+    GET_CATEGORY,
 } from "../constants/question";
 
 export const allquestion = () => async (dispatch) => {
@@ -50,19 +51,14 @@ export const category = () => async (dispatch) => {
         dispatch({ type: FAIL_QUESTION, payload: error.response.data });
     }
 };
-export const update = async (dispatch) => {
-    const result = await axios.put(
-        "/api/questions/put/60b2432818e8d41be8766894"
-    );
-    console.log("updatequestion", result);
-    dispatch({ type: UPDATE_QUESTION, payload: result.data });
-};
-export const updateQuestions = (id, question) => async (dispatch) => {
+
+export const updateQuestions = (id, question, history) => async (dispatch) => {
     dispatch({ type: LOAD_USER });
     try {
-        let { result } = await axios.put(`/api/questions/put/${id}`, question);
-        console.log("up", result);
+        let result = await axios.put(`/api/questions/put/${id}`, question);
+        console.log("up", result.data);
         dispatch({ type: UPDATE_QUESTION, payload: result.data });
+        history.push("/dashbord");
     } catch (error) {
         dispatch({ type: FAIL_QUESTION, payload: error.response.data });
     }
@@ -74,8 +70,24 @@ export const registerquestion = (question, history) => async (dispatch) => {
         console.log("register", result.data);
         //succees action
         dispatch({ type: REGISTER_QUESTION, payload: result.data }); //{user,token,msg}
+        history.push("/dashbord");
     } catch (error) {
         // fail
         dispatch({ type: FAIL_QUESTION, payload: error.response.data.errors });
     }
 };
+export const getQuestionsCat =
+    (category = "") =>
+    async (dispatch) => {
+        dispatch({ type: LOAD_USER });
+        try {
+            let result = await axios.get(`/api/questions/filter/${category}`);
+            dispatch({ type: GET_CATEGORY, payload: result.data });
+        } catch (error) {
+            // fail
+            dispatch({
+                type: FAIL_QUESTION,
+                payload: error.response.data.errors,
+            });
+        }
+    };

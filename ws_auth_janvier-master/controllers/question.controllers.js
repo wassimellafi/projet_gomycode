@@ -5,6 +5,7 @@ exports.Create = async (req, res) => {
         const { question } = req.body;
         const { type } = req.body;
         const { difficulty } = req.body;
+        const { category } = req.body;
         const { correct_answer } = req.body;
         const { incorrect_answers } = req.body;
         const newQuestion = new Question({ ...req.body });
@@ -52,6 +53,26 @@ exports.getByCat = async (req, res) => {
         const findcategory = await Question.find({
             category: req.params["category"],
             difficulty: req.params["difficulty"],
+        });
+        // ken mech mawjoud
+        // bad credential
+        if (!findcategory) {
+            return res
+                .status(403)
+                .send({ errors: [{ msg: "category not found" }] });
+        }
+
+        res.status(200).send({
+            findcategory,
+        });
+    } catch (error) {
+        res.status(500).send({ errors: [{ msg: "erreur" }] });
+    }
+};
+exports.getCat = async (req, res) => {
+    try {
+        const findcategory = await Question.find({
+            category: req.params["category"],
         });
         // ken mech mawjoud
         // bad credential

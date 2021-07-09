@@ -2,84 +2,113 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { updateQuestions } from "../../../Redux/actions/question";
 import { useSelector, useDispatch } from "react-redux";
-function Editcategories({ edit_categories, index }) {
-    console.log("edittt", edit_categories);
+import { allquestion } from "../../../Redux/actions/question";
+import "./Editcategories.css";
+function Editcategories(props) {
     const [show, setShow] = useState(false);
-    const [edit, setEdit] = useState({});
+    const [editdifficulty, setEditDifficulty] = useState("");
+    const [editquestion, setEditQuestion] = useState();
+    console.log("editquestion", editquestion);
+    const questions = useSelector((state) => state.questionReducer);
+    const question = questions.question.find(
+        (id) => id._id === props.match.params.id
+    );
+    useEffect(() => {
+        dispatch(allquestion());
+    }, []);
+
     const handleClose = () => {
         setShow(false);
     };
+
     const handleChange = (e) => {
-        setEdit({ ...edit, [e.target.name]: e.target.value });
+        setEditQuestion({ ...editquestion, [e.target.name]: e.target.value });
     };
     const handleShow = () => {
         setShow(true);
     };
     const dispatch = useDispatch();
-    const handleClick = () => {
-        dispatch(
-            updateQuestions({
-                id: edit_categories._id,
-                question: edit_categories,
-            })
-        );
+    const handleRegister = (e) => {
+        e.preventDefault();
+        dispatch(updateQuestions(props.match.params.id, editquestion));
         handleClose();
     };
 
     return (
-        <>
-            <Button variant="outline-dark" onClick={handleShow}>
-                Edit
-            </Button>
+        <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+            <div class="col-lg-6">
+                <form onSubmit={(e) => handleRegister(e)}>
+                    <div class="row px-3">
+                        {" "}
+                        <label class="mb-1">
+                            <h6 class="mb-0 text-sm">question</h6>
+                        </label>{" "}
+                        <input
+                            class="mb-4"
+                            type="text"
+                            name="question"
+                            placeholder="Edit your question..."
+                            onChange={handleChange}
+                            value={question.question}
+                        />{" "}
+                    </div>
+                    <div class="row px-3">
+                        {" "}
+                        <label class="mb-1">
+                            <h6 class="mb-0 text-sm">difficulty</h6>
+                        </label>{" "}
+                        <input
+                            class="mb-4"
+                            name="difficulty"
+                            placeholder="difficulty"
+                            value={question.difficulty}
+                            onChange={handleChange}
+                        />{" "}
+                    </div>
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Edit Categories </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form.Control
-                        type="text"
-                        id="question"
-                        placeholder="Edit your question..."
-                        onChange={(e) => handleChange(e.target.value)}
-                        value={edit_categories.question}
-                        name="question"
-                    />
-                    <Form.Control
-                        type="text"
-                        id="difficulty"
-                        placeholder="Edit your Difficulty question..."
-                        onChange={(e) => handleChange(e.target.value)}
-                        value={edit_categories.difficulty}
-                        name="difficulty"
-                    />
-                    <Form.Control
-                        type="text"
-                        id="incorrect_answers"
-                        placeholder="Edit your Difficulty Incorrect_answers..."
-                        onChange={(e) => handleChange(e.target.value)}
-                        value={edit_categories.incorrect_answers}
-                        name="incorrect_answers"
-                    />
-                    <Form.Control
-                        type="text"
-                        id="correct_answer"
-                        placeholder="Edit your Difficulty Correct_answer..."
-                        onChange={(e) => handleChange(e.target.value)}
-                        value={edit_categories.correct_answer}
-                        name="correct_answer"
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClick}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
+                    <div class="row px-3">
+                        {" "}
+                        <label class="mb-1">
+                            <h6 class="mb-0 text-sm">correct_answer</h6>
+                        </label>{" "}
+                        <input
+                            name="correct_answer"
+                            placeholder="correct_answer"
+                            value={question.correct_answer}
+                            onChange={handleChange}
+                        />{" "}
+                    </div>
+                    <div class="row px-3">
+                        {" "}
+                        <label class="mb-1">
+                            <h6 class="mb-0 text-sm">incorrect_answers</h6>
+                        </label>{" "}
+                        <input
+                            class="mb-4"
+                            name="incorrect_answers"
+                            placeholder="enter your incorrect_answers"
+                            value={question.incorrect_answers}
+                            onChange={handleChange}
+                        />{" "}
+                    </div>
+                    <div class="row px-3 mb-4">
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            {" "}
+                        </div>{" "}
+                    </div>
+                    <div class="row mb-3 px-3">
+                        {" "}
+                        <button
+                            type="submit"
+                            class="btn btn-blue text-center"
+                            onClick={handleRegister}
+                        >
+                            Save
+                        </button>{" "}
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 }
 

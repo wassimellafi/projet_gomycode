@@ -16,6 +16,8 @@ import { current } from "./Redux/actions/user";
 import { allquestion } from "./Redux/actions/question";
 import { category } from "./Redux/actions/question";
 import DescriptionCourses from "./Pages/DescriptionCourses/DescriptionCourses";
+import Editcategories from "./Pages/dashboard/editcategories/Editcategories";
+import ListChoixCategories from "./Pages/dashboard/listchoixcategories/ListChoixCategories";
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
 import Home from "./Pages/Home/Home";
@@ -149,6 +151,14 @@ function App() {
                 <Route path="/courses" component={CoursesList} />
                 <Route path="/dashbord" component={Listcategories} />
 
+                <Route
+                    path="/questions/put/:id"
+                    render={(props) => <Editcategories {...props} />}
+                />
+                <Route
+                    path="/listchoix"
+                    render={(props) => <ListChoixCategories {...props} />}
+                />
                 <Route path="/login" component={Login} />
                 <PrivateRoute path="/profile" component={Profile} />
                 <Route

@@ -6,6 +6,7 @@ const {
     getByCat,
     Update,
     Delete,
+    getCat,
 } = require("../controllers/question.controllers");
 const isAuth = require("../middleware/isAuth");
 const router = express.Router();
@@ -29,6 +30,7 @@ router.get("/:id", getById);
 router.get("/filter/:category/:difficulty", getByCat);
 router.put("/put/:id", Update);
 router.delete("/delete/:id", Delete);
+router.get("/filter/:category", getCat);
 
 // default export
 module.exports = router;

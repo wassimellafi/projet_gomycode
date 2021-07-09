@@ -9,6 +9,7 @@ const {
     CURRENT_USER,
     LOAD_USER,
     UPDATE_QUESTION,
+    GET_CATEGORY,
 } = require("../constants/question");
 
 // initialstate
@@ -16,6 +17,7 @@ const initialState = {
     question: {},
     category: {},
     errors: [],
+    listchoix: {},
     isAuth: false,
     load: false,
     user: {},
@@ -30,22 +32,28 @@ const questionReducer = (state = initialState, { type, payload }) => {
                 question: payload.findquestion,
                 isAuth: true,
             };
+        case GET_CATEGORY:
+            return {
+                ...state,
+                listchoix: payload.findcategory,
+                isAuth: true,
+            };
         case UPDATE_QUESTION:
-            return state.question.map((question) => {
-                if (question._id === payload.findquestion._id) {
+            return state.question.map((state) => {
+                if (state._id === payload._id) {
                     return {
-                        ...question,
-                        ...payload.findquestion,
+                        ...state,
+                        ...payload,
                     };
                 } else {
-                    return question;
+                    return state;
                 }
             });
         case REGISTER_QUESTION:
             localStorage.setItem("token", payload.token);
             return {
                 ...state,
-                question: payload,
+                question: payload.findquestion,
                 load: false,
                 isAuth: true,
             };

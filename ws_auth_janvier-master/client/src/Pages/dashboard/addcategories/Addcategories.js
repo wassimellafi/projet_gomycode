@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerquestion } from "../../../Redux/actions/question";
 import "./Addcategories.css";
 function Addcategories({ history, edit_categories }) {
     const [show, setShow] = useState(false);
-    const [difficulty, setDifficulty] = useState("");
     const [question, setQuestion] = useState("");
+    const category = useSelector((state) => state.questionReducer.category);
     const handleClose = () => {
         setShow(false);
     };
@@ -44,23 +44,37 @@ function Addcategories({ history, edit_categories }) {
                     <TextField
                         select
                         label="Select Difficulty"
-                        value={difficulty}
-                        onChange={(e) => setDifficulty(e.target.value)}
+                        onChange={handleChange}
                         variant="outlined"
+                        name="difficulty"
                         style={{ marginBottom: 30 }}
                     >
                         <MenuItem key="Easy" value="easy">
                             Easy
                         </MenuItem>
-                        <MenuItem key="Medium" value="medium">
+                        <MenuItem key="Medium" value="facile">
                             facile
                         </MenuItem>
+                    </TextField>
+                    <TextField
+                        select
+                        label="Select Category"
+                        onChange={handleChange}
+                        variant="outlined"
+                        style={{ marginBottom: 30 }}
+                        name="category"
+                    >
+                        {category.map((cat) => (
+                            <MenuItem key={cat._id} value={cat._id}>
+                                {cat.title}
+                            </MenuItem>
+                        ))}
                     </TextField>
                     <Form.Control
                         type="text"
                         placeholder="Incorrect_answers..."
                         onChange={handleChange}
-                        name="Incorrect_answers"
+                        name="incorrect_answers"
                     />
                     <Form.Control
                         type="text"
@@ -74,7 +88,7 @@ function Addcategories({ history, edit_categories }) {
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleClick}>
-                        Save Changes
+                        Save
                     </Button>
                 </Modal.Footer>
             </Modal>
