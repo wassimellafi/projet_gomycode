@@ -32,6 +32,10 @@ function App() {
     const [data, setData] = useState({});
     const question = useSelector((state) => state.questionReducer.question);
     console.log("coursesapp", question);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(current());
+    }, []);
     const fetchQuestions = async (category = "", difficulty = "") => {
         const { data } = await axios.get(
             `/api/questions/filter/${category}/${difficulty}`

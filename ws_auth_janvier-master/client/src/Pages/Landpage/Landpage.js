@@ -19,7 +19,7 @@ const LandPage = () => {
         <div className="landpage">
             <div>
                 <h1>welcome from the test</h1>
-                {/* <Row>
+                <Row>
                     {category.map((movie, key) => {
                         return (
                             <Col key={movie._id}>
@@ -27,7 +27,7 @@ const LandPage = () => {
                             </Col>
                         );
                     })}
-                </Row> */}
+                </Row>
             </div>
         </div>
     );

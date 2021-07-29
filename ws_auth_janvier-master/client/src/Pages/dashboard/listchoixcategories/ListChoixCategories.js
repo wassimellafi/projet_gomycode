@@ -10,6 +10,10 @@ import { allquestion } from "../../../Redux/actions/question";
 import { getQuestionsCat } from "../../../Redux/actions/question";
 import "./ListChoixCategories.css";
 function ListChoixCategories() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(allquestion());
+    }, []);
     const [category, setCategory] = useState("");
     const [list, setList] = useState("");
 
@@ -18,10 +22,6 @@ function ListChoixCategories() {
     const result = useSelector((state) => state.questionReducer.category);
     console.log("result", result);
     console.log("list", list);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(allquestion());
-    }, []);
 
     const handleSubmit = () => {
         if (!category) {

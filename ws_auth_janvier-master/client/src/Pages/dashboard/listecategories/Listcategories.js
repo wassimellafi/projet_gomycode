@@ -10,16 +10,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./Listcategories.css";
 function Listcategories(props) {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(allquestion());
+    }, []);
     const question = useSelector((state) => state.questionReducer.question);
     console.log("question", question);
     const cat = useSelector((state) => state.questionReducer.category);
     console.log("cat", cat);
     const listchoix = useSelector((state) => state.questionReducer.listchoix);
     console.log("listchoix", listchoix);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(allquestion());
-    }, []);
+
     return (
         <div className="listTask">
             {listchoix.map((categories, index) => (

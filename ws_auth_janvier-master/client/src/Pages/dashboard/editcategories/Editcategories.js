@@ -5,17 +5,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { allquestion } from "../../../Redux/actions/question";
 import "./Editcategories.css";
 function Editcategories(props) {
-    const [show, setShow] = useState(false);
-    const [editdifficulty, setEditDifficulty] = useState("");
-    const [editquestion, setEditQuestion] = useState();
-    console.log("editquestion", editquestion);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(allquestion());
+    }, []);
     const questions = useSelector((state) => state.questionReducer);
     const question = questions.question.find(
         (id) => id._id === props.match.params.id
     );
-    useEffect(() => {
-        dispatch(allquestion());
-    }, []);
+    const [show, setShow] = useState(false);
+
+    const [editquestion, setEditQuestion] = useState({
+        question: "",
+        difficulty: "",
+        correct_answer: "",
+        incorrect_answers: [],
+    });
+    console.log("editquestion", editquestion);
 
     const handleClose = () => {
         setShow(false);
@@ -27,7 +33,7 @@ function Editcategories(props) {
     const handleShow = () => {
         setShow(true);
     };
-    const dispatch = useDispatch();
+
     const handleRegister = (e) => {
         e.preventDefault();
         dispatch(updateQuestions(props.match.params.id, editquestion));
@@ -48,8 +54,8 @@ function Editcategories(props) {
                             type="text"
                             name="question"
                             placeholder="Edit your question..."
+                            defaultValue={question.question}
                             onChange={handleChange}
-                            value={question.question}
                         />{" "}
                     </div>
                     <div class="row px-3">
@@ -61,7 +67,7 @@ function Editcategories(props) {
                             class="mb-4"
                             name="difficulty"
                             placeholder="difficulty"
-                            value={question.difficulty}
+                            defaultValue={question.difficulty}
                             onChange={handleChange}
                         />{" "}
                     </div>
@@ -74,7 +80,7 @@ function Editcategories(props) {
                         <input
                             name="correct_answer"
                             placeholder="correct_answer"
-                            value={question.correct_answer}
+                            defaultValue={question.correct_answer}
                             onChange={handleChange}
                         />{" "}
                     </div>
@@ -87,7 +93,7 @@ function Editcategories(props) {
                             class="mb-4"
                             name="incorrect_answers"
                             placeholder="enter your incorrect_answers"
-                            value={question.incorrect_answers}
+                            defaultValue={question.incorrect_answers}
                             onChange={handleChange}
                         />{" "}
                     </div>
